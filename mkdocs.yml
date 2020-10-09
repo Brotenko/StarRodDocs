@@ -1,0 +1,9 @@
+site_name: StarRod Documentation
+nav:
+  - Getting Started: index.md
+  - Writing Patch Files: writing-patch-files.md
+theme: readthedocs
+markdown_extensions:
+  - toc:
+     permalink: "#"
+  - admonition
