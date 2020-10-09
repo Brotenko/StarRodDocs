@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Writing Patch Files - StarRod Documentation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Writing Patch Files";
+    var mkdocs_page_input_path = "writing-patch-files.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> StarRod Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Getting Started</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Writing Patch Files</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#basic-patch-file-syntax">Basic Patch File Syntax</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#patch-syntax-reference">Patch Syntax Reference</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#directives">Directives</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#expressions">Expressions</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#map-expressions">Map Expressions</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#constant-offsets">Constant Offsets</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#script-variables">Script Variables</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#map-variables">Map Variables</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#area-variables">Area Variables</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#utility-functions">Utility Functions</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#global-patches">Global Patches</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#modifying-existing-data">Modifying Existing Data</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#creating-new-global-structs">Creating New Global Structs</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#hint-files">Hint Files</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">StarRod Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Writing Patch Files</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="writing-patch-files">Writing Patch Files<a class="headerlink" href="#writing-patch-files" title="Permanent link">#</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h2>
+<p>Since the memory of the N64 is limited, sections of the ROM containing assets, scripts, and code are loaded into memory as they are needed. For example, data is loaded whenever the player enters a new map, starts a battle, uses a move, and so on. These chunks of data are referred to as <strong><em>data sections</em></strong>. Each map has its own map data section while battles are grouped together by area (ex: battles from Dry Dry Desert or battles from Koopa Bros Fortress). Each boss usually has their own battle data section. Each player move has its own data section, as do different actions in the overworld.</p>
+<p>Star Rod rips these data sections from the ROM and recursively scans through them to detect scripts and data structures. Most data structures have been identified and reverse engineered. Star Rod's automated system will find the vast majority of them and write them to text files: <code>mscr</code> for maps and <code>bscr</code> for battles. Much of the game logic is implemented through a custom event and scripting engine, which is available to us as <strong><em>script bytecode</em></strong>. This bytecode is sufficiently high-level for us to create new enemies, setup complex map logic, and make new cutscenes without having to write any (or perhaps just a little) assembly.</p>
+<p>The scripts are dumped along with all the other data structures in each data section. The dumped data structures can be <strong><em>patched</em></strong> by editing their text in patch files: <code>mpat</code> for map-related data and <code>bpat</code> for battle-related data. These patches are converted from their various text formats to binary and written over the original structures. If the patched structure is larger than the original, it will be moved to a free location in memory and all pointers to it are automatically updated. You can also declare new data structures in your patch files. Since the text formats for structures in source and patch files are identical, you can copy structures from one source file into a patch file. For example, this can be used to copy enemies from one battle section to another or copy NPCs from one map to another.</p>
+<p>The distinction between map and battle data serves two important purposes. First, the set of “library” functions and scripts that are available to call from scripts is different in these two environments. This is because “library” or “common” data is loaded into and out of memory whenever a battle begins or ends. The list of available library functions and scripts can be found in the database folder. Second, different data structures are used in battles and maps. For example, NPCs are only relevant to map scripts and Actors are only relevant to battle scripts. Keeping track of which functions and data structures are available to which scripts is something Star Rod does automatically.</p>
+<p>To really understand how these files are structured, you should inspect the dumped sources and study how the game logic is structured. The best way to implement a new feature is often to find a map or battle that already does something similar to what you want and see how the developers did it. For example, the overworld AI for Boo enemies in Pro Mode was created by duplicating and modifying the Ember AI.</p>
+<h2 id="basic-patch-file-syntax">Basic Patch File Syntax<a class="headerlink" href="#basic-patch-file-syntax" title="Permanent link">#</a></h2>
+<p>Patches are written like this:</p>
+<pre><code class="text">@ $DataTable_80241C00 {
+    002A0000 002B0010 002C0015 002D0002
+}
+</code></pre>
+
+<p>This tells Star Rod to look for a data structure called <code>DataTable_80241C00</code> and overwrite it with the 16 bytes that appear on the following line. Patches are contained within curly brackets. Let's try something more advanced. We can choose to only overwrite the third value by adding an offset to the start of our patchs:</p>
+<pre><code class="text">@ $DataTable_80241C00 { 
+    [8] 002C0015 
+}
+</code></pre>
+
+<p>By default, each token in a patch is treated as a hexadecimal 32-bit integer. So the value “1” writes “00000001”. This can be changed by adding a suffix identifying the token as a decimal number (`), and as either a 16-bit short (s) or a 8-bit byte (b). You can use the minus sign for negative numbers in any format. Float values will be treated as IEEE floats, but leading decimal places are not allowed. Here are some examples of numbers:</p>
+<pre><code class="text">128  = 00000128
+100` = 00000064
+12b  = 12
+12`b = 0C
+1FFs = 01FF
+-10s = FFF0
+3.2  = 404CCCCD
+-2.5 = C0200000
+.5   = error
+</code></pre>
+
+<p>More sophisticated patches are available for certain data structures. Function patches expect MIPS assembly code, script patches expect lines of Paper Mario's scripting language, strings expect Star Rod's string markup language, and so on. <br/>
+You can also use constant values defined locally or globally, enumerated values from the database directory, or special expressions like <code>~Vec3d:LocationMarker</code> that produce specially formatted data or read data from editable map files.</p>
+<h3 id="patch-syntax-reference">Patch Syntax Reference<a class="headerlink" href="#patch-syntax-reference" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>% comment</th>
+<th>Single line comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/%<br>...<br>%/ <img width=200 visibility: hidden/></td>
+<td>Multi-line comment.<br>Can begin or end at any point in a line. Everything between these will be replaced with a single space and will not begin a new line.</td>
+</tr>
+<tr>
+<td>@ $Pointer {<br>.. }</td>
+<td>Starts a new patch overwriting the data structure at <code>$Pointer</code>. The <code>$</code> indiciates this is the address of some named data structure.</td>
+</tr>
+<tr>
+<td>@ $Pointer {<br>[40] ... }</td>
+<td>Add an offset to the patch location.</td>
+</tr>
+<tr>
+<td>@ $Pointer {<br>[40] ...<br> [60] ... }</td>
+<td>Alternate way to create patches with offsets. More than one can be used, but each must start on a new line.</td>
+</tr>
+<tr>
+<td>@ $Pointer [40]{<br>[40] ...<br> [60] ... }</td>
+<td>Set the <em>base offset</em> for a patch. Other patch offsets for this struct will be relative to this value. Hence, the <code>[10]</code> will begin at <code>$Pointer[50]</code> and the <code>[20]</code> will begin at <code>$Pointer[60]</code>.</td>
+</tr>
+<tr>
+<td>.Constant</td>
+<td>Local/global constants, enum values from in /database/types/, or struct-specific constant values.</td>
+</tr>
+<tr>
+<td>*ScriptVariable</td>
+<td>Special pointers used for both local variables in scripts and global game data. See “Script Variables” for more information.</td>
+</tr>
+<tr>
+<td>~Expression</td>
+<td>Converts the enclosed statement into some complicated binary expression. Used by some scripts to reference data from maps and other source files.</td>
+</tr>
+<tr>
+<td>#directive</td>
+<td>Used for imports, creating new structs, renaming them, and more.</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h3 id="directives">Directives<a class="headerlink" href="#directives" title="Permanent link">#</a></h3>
+<p><strong>#new:StructType $StructName</strong> <br>
+Creates a new struct and immediately begins reading a patch for it. You can add extra patches to the struct just like any other.</p>
+<p><strong>#import OtherFile.mpat</strong> <br>
+Imports all patches from another patch file in the relevant <code>/import/</code> directory. For battle scripts, the <code>/enemy/</code> directory may also be used. You can add patches to imported structs if you need to modify their properties.</p>
+<p><strong>#import MyFile.bpat FileNamespace</strong> <br>
+The second example shows an import with a qualifying namespace. Structures imported in this way will have names like: <code>$FileNamespace:PointerName</code>. If the imported file has imports of its own, the resulting import will have a nested namespace, ie: <code>$Outer:Inner:OriginalName</code>.</p>
+<p><strong>#define .Name Value</strong> <br>
+Creates a new constant. The constant may be referenced anywhere in the current script. Global constants must be defined in either a global patch file or an enum file.</p>
+<p><strong>#alias $ComplicatedStructName $SimpleName</strong> <br>
+Adds another name to reference an existing struct.</p>
+<p><strong>#delete $StructName</strong> <br>
+Clears the memory associated with an existing struct. Useful if you need to create more room in an existing map or battle section.</p>
+<p><strong>#reserve 80231000 80238000</strong> <br>
+Reserves an area of RAM. No new structures will be placed there. You can use it for whatever you like. General Guy uses this area to load each wave of minions. Only one region of RAM may be reserved per patch file.</p>
+<h3 id="expressions">Expressions<a class="headerlink" href="#expressions" title="Permanent link">#</a></h3>
+<p><strong>~String:<em>StringName</em></strong> <br>
+Replaced with the string index assigned to a named custom string (see “Editing Strings”).</p>
+<p><strong>~SizeOf:<em>Type</em></strong> <br>
+Replaced with an int token equal to the size of a struct type, e.g. <code>~Sizeof:Actor</code>. Only works for structs that have a fixed size, i.e. not Function, Script, etc.</p>
+<p><strong>~Index:<em>VariableName</em></strong> <br>
+Replaced by the index of a variable.
+Example: <code>~Index:<em>DojoRank</code> resolves to 1C since </em>DojoRank = *GameByte[01C].</p>
+<p><strong>~Func:<em>FunctionName</em></strong> <br>
+Used in function structs to identify calls to known engine functions.
+Function names are read from <code>/database/*.lib</code></p>
+<p><strong>~FX:<em>EffectName</em></strong> <br>
+Used in script calls to the PlayEffect function, assigning meaningful names to a pair of function arguments. Values are read from <code>/database/types/effects.txt</code></p>
+<p><strong>~Flags:<em>FlagType<em>:</em>FlagValues</em></strong> <br>
+<strong>~Flags:<em>FlagType<em>:</em>FlagValues<em>:</em>Constant</em></strong> <br>
+<strong>~Flags:<em>FlagType<em>::</em>Constant</em></strong> <br>
+Flag type is a name from a <em>flags</em> file in <code>$database/types/</code>. Flag values is a series of flag names separated by |. This value can be blank, but must always be present. Constant is just a constant value to OR with the combination of flag values (intended for undocumented flags). The constant field may be omitted. <br>
+Example: <code>~Flags:DamageType:NoContact|Fire</code> for a fire-type move that doesn't count as direct contact.</p>
+<p><strong>~Short:<em>ConstName</em></strong> <br>
+Resolves a constant and writes it to the patch as a 16-bit short.</p>
+<p><strong>~Byte:<em>ConstName</em></strong> <br>
+Resolves a constant and writes it to the patch as a 16-bit short.</p>
+<p><strong>~Sprite:<em>SpriteName<em>:</em>AnimationName</em></strong> <br>
+<strong>~Sprite:<em>SpriteName<em>:</em>PaletteName<em>:</em>AnimationName</em></strong> <br>
+Expands to an NPC sprite animation ID. Names of animations and palettes can be changed using the Sprite Editor.</p>
+<p><strong>~RasterFile:<em>Format<em>:</em>Filename</em></strong> <br>
+<strong>~PaletteFile:<em>Format<em>:</em>Filename</em></strong> <br>
+Copies the contents of an image or palette file from the <code>$mod/res</code> directory according to a specified image format, e.g. CI-4, IA-8, etc. The filename is relative to <code>$mod/res</code>.
+Supported formats are: I-4, I-8, IA-4, IA-8, IA-16, CI-4, CI-8, RGBA-16, RGBA-32</p>
+<p><strong>~BinaryFile:<em>Filename</em></strong> <br>
+Copies the contents of a binary file from the <code>$mod/res</code> directory as a series of byte tokens. The file will not be padded. The filename is relative to <code>$mod/res</code>.</p>
+<h3 id="map-expressions">Map Expressions<a class="headerlink" href="#map-expressions" title="Permanent link">#</a></h3>
+<p>Expressions can be used to reference map object data, like ID values or positions from names given in the map editor. When used in a map patch file (.mpat), these expressions may omit the <strong><em>MapName</em></strong> field when referencing the current map.</p>
+<p><strong>~Model:<em>MapName<em>:</em>ModelName</em></strong> <br>
+<strong>~ModelShort:<em>MapName<em>:</em>ModelName</em></strong> <br>
+Replaced by the ID (32 or 16 bit) of the first model in the model tree with a given name based on a breadth first traversal. Avoid issues by using unique model names.</p>
+<p><strong>~Collider:<em>MapName<em>:</em>ColliderName</em></strong> <br>
+<strong>~ColliderShort:<em>MapName<em>:</em>ColliderName</em></strong> <br>
+<strong>~Zone:<em>MapName<em>:</em>ZoneName</em></strong> <br>
+<strong>~ZoneShort:<em>MapName<em>:</em>ZoneName</em></strong> <br>
+Identical to Model and ModelShort.</p>
+<p><strong>~XXX:<em>MapName<em>:</em>MarkerName</em></strong> <br>
+Marker location expression with valid values for the location XXX are:</p>
+<pre><code class="text">Vec2d,  Vec2f     2D planar position
+VecXZd, VecXZf    Alternative name for 2D planar position
+Vec3d,  Vec3f     3D position
+PosXd,  PosXf     X coordinate value
+PosYd,  PosYf     Y coordinate value
+PosZd,  PosZf     Z coordinate value
+Angle,  Angled    Yaw angle
+Vec4d,  Vec4f     3D position followed by yaw angle
+</code></pre>
+
+<p>In each case, the expression will be replaced by either floating point (<strong>f</strong>) or 32-bit int (<strong>d</strong>) values for the given location.</p>
+<p><strong>~Path3d:<em>MapName<em>:</em>MarkerName</em></strong> <br>
+<strong>~Path3f:<em>MapName<em>:</em>MarkerName</em></strong> <br>
+Replaced by an array of 3D points in the path assigned to the marker.</p>
+<p><strong>~PushGrid:<em>MapName<em>:</em>MarkerName</em></strong> <br>
+Used by CreatePushBlockGrid to specify a grid for blue pushable blocks.</p>
+<h3 id="constant-offsets">Constant Offsets<a class="headerlink" href="#constant-offsets" title="Permanent link">#</a></h3>
+<p>You can get a relative address within a struct using an offset, which may either be a number or a constant value:</p>
+<pre><code class="text">$MyPointer[offset]
+$MyPointer[.Constant]
+</code></pre>
+
+<p>Functions allow using one of their internal labels as offsets:</p>
+<pre><code class="text">$MyFunction[.o150]
+</code></pre>
+
+<p>Offsets may also be applied to constants, in which case the value of the constants are added together. You may nest offsets in this way:</p>
+<pre><code class="text">#define .ConstA 10
+#define ConstB 3
+.ConstA[.ConstB] % == 13
+$MyPointer[.ConstA[.ConstB[2]]] % address of MyPointer + 13
+</code></pre>
+
+<h3 id="script-variables">Script Variables<a class="headerlink" href="#script-variables" title="Permanent link">#</a></h3>
+<p>There are a set of special values which are used in scripts to denote variables. If one of these variables is passed to a function, it will usually read the value from that variable instead of the literal value of the argument. Each set of script variables can be understood as an array with a certain scope and for a certain purpose.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th align="center">Maximum</th>
+<th>First Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*GameByte[i]</td>
+<td>Global saved byte.</td>
+<td align="center">0x200</td>
+<td>F5DE0180 (-170m)</td>
+</tr>
+<tr>
+<td>*GameFlag[i]</td>
+<td>Global saved flag.</td>
+<td align="center">0x800</td>
+<td>F8405B80 (-130m)</td>
+</tr>
+<tr>
+<td>*ModByte[i]</td>
+<td>Extra saved byte for mods.</td>
+<td align="center">0x1000</td>
+<td>---</td>
+</tr>
+<tr>
+<td>*ModFlag[i]</td>
+<td>Extra saved flag for mods.</td>
+<td align="center">0x8000</td>
+<td>---</td>
+</tr>
+<tr>
+<td>*AreaByte[i]</td>
+<td>Cleared on area change.</td>
+<td align="center">0x10</td>
+<td>F70F2E80 (-150m)</td>
+</tr>
+<tr>
+<td>*AreaFlag[i]</td>
+<td>Cleared on area change.</td>
+<td align="center">0x100</td>
+<td>F9718880 (-110m)</td>
+</tr>
+<tr>
+<td>*MapVar[i]</td>
+<td>Cleared on map change.</td>
+<td align="center">0x10</td>
+<td>FD050F80 (-50m)</td>
+</tr>
+<tr>
+<td>*MapFlag[i]</td>
+<td>Cleared on map change.</td>
+<td align="center">0x60</td>
+<td>FAA2B580 (-90m)</td>
+</tr>
+<tr>
+<td>*Fixed[0.3]</td>
+<td>Fixed point real.<br>Precision = 1/1024</td>
+<td align="center">±19531</td>
+<td>F24A7A80 (-230m)</td>
+</tr>
+<tr>
+<td>*Array[i]</td>
+<td>From allocated script array.</td>
+<td align="center">varies</td>
+<td>F4ACD480 (-190m)</td>
+</tr>
+<tr>
+<td>*FlagArray[i]</td>
+<td>From allocated script array.</td>
+<td align="center">varies</td>
+<td>F37BA780 (-210m)</td>
+</tr>
+<tr>
+<td>*Var[i]</td>
+<td>Script variables.</td>
+<td align="center">0x10</td>
+<td>FE363C80 (-30m)</td>
+</tr>
+<tr>
+<td>*Flag[i]</td>
+<td>Script flags.</td>
+<td align="center">0x60</td>
+<td>FBD3E280 (-70m)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note:</em> Flags are packed into 32-bit words from LSB to MSB, <br>
+1F 1E 1D ... 02 01 00        3F 3E 3D ... 22 21 20        etc.</p>
+<p>Just like with other offsets, the array offsets into variables can either be numeric, e.g. <code><em>Var[4]</code>, <code>*GameByte[80]</code>, etc; or constant <code></em>GameByte[.SomeConstant]</code>.</p>
+<h5 id="map-variables">Map Variables<a class="headerlink" href="#map-variables" title="Permanent link">#</a></h5>
+<p>const pointer 802DA480 holds address of MapFlags (usually 802DBC70, size = 0xC bytes) <br>
+const pointer 802DA484 holds address of MapVars (usually 802DBCA8, size = 0x40 bytes) <br>
+During map transitions, these are cleared by [802C3278]</p>
+<h5 id="area-variables">Area Variables<a class="headerlink" href="#area-variables" title="Permanent link">#</a></h5>
+<p>800DBF70-800DBF90 <br>
+800DBF90-800DBFA0 <br>
+The area byte/flag variables are cleared whenever the player leaves the area. They have a limited capacity, so don't overuse them. This is for persistent, but temporary data. For example, an NPC that says different things when you talk to them repeatedly. <br>
+During area transitions, these are cleared by [80145390]</p>
+<h5 id="utility-functions">Utility Functions<a class="headerlink" href="#utility-functions" title="Permanent link">#</a></h5>
+<p>Functions read from and write to these variables with a set of helper functions, which you must familiarize yourself with. Each takes an argument pointing to the “script context” -- the data structure holding the state of the script which called the function. For more on that, read section <a href="">3.1. Script Bytecode</a>. These functions can be called with a NULL (0) script context, in which case <code><em>Var[x]</code> and <code></em>Flag[x]</code> will not be resolvable. Whether variables are treated as integers or floats depends on which set of functions you use.</p>
+<p><strong>get_variable &emsp;&emsp;&emsp;&emsp; (802C7ABC)</strong> <br>
+A0     Script context pointer. <br>
+A1     “Variable” to resolve. Could be constant or a script variable value like FE363C80. <br>
+V0    (return) Integer value of variable.</p>
+<p><strong>set_variable &emsp;&emsp;&emsp;&emsp; (802C8098)</strong> <br>
+A0     Script context pointer. <br>
+A1     “Variable” to resolve. Could be constant or a script variable value like FE363C80. <br>
+A2     New value to set. <br>
+V0    (return) Previous integer value of variable.</p>
+<p><strong>get_float_variable &emsp; (802C842C)</strong> <br>
+A0     Script context pointer. <br>
+A1     “Variable” to resolve. Could be constant or a script variable value like FE363C80. <br>
+F0    (return) Floating-point value of variable.</p>
+<p><strong>set_float_variable &emsp; (802C8640)</strong> <br>
+A0     Script context pointer. <br>
+A1     “Variable” to resolve. Could be constant or a script variable value like FE363C80. <br>
+A2     New value to set. <br>
+F0    (return) Previous floating-point value of variable.</p>
+<p><strong>get_float &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; (802C4920)</strong> <br>
+A0    *Fixed script variable. If out of range, assumes value is a “reasonably-sized” float. <br>
+F0    Floating point value.</p>
+<p><strong>get_fixed &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; (802C496C)</strong> <br>
+F12    <em>Fixed script variable <br>
+V0    </em>Fixed representation. Not range-checked! Ensure arguments no larger than ±19531.</p>
+<p><strong>set_global_flag &emsp;&emsp;&emsp; (80145450)</strong> <br>
+sets GlobalFlag[i], accepts either indices or encoded values. returns the old value.</p>
+<p><strong>get_global_flag &emsp;&emsp;&emsp; (801454BC)</strong> <br>
+returns GlobalFlag[i], accepts either indices or encoded values.</p>
+<p><strong>set_global_byte &emsp;&emsp;&emsp; (80145520)</strong> <br>
+sets GlobalByte[i] at 800DBD70, accepts ONLY indices, returns the old value.</p>
+<p><strong>get_global_byte &emsp;&emsp;&emsp; (80145538)</strong> <br>
+returns GlobalByte[i] from 800DBD70, accepts ONLY indices.</p>
+<p><strong>set_area_byte &emsp;&emsp;&emsp;&emsp; (80145638)</strong> <br>
+sets AreaByte[i] at 800DBF90, accepts ONLY indices, returns the old value.</p>
+<p><strong>get_area_byte &emsp;&emsp;&emsp;&emsp; (80145650)</strong> <br>
+returns AreaByte[i] from 800DBF90, accepts ONLY indices.</p>
+<p><strong>set_area_flag &emsp;&emsp;&emsp;&emsp;&emsp; (801455A0)</strong> <br>
+sets AreaFlag[i] at 800DBF70, accepts ONLY indices, returns the old value.</p>
+<p><strong>get_area_flag &emsp;&emsp;&emsp;&emsp;&emsp; (801455F0)</strong> <br>
+returns AreaFlag[i] from 800DBF70, accepts ONLY indices.</p>
+<h2 id="global-patches">Global Patches<a class="headerlink" href="#global-patches" title="Permanent link">#</a></h2>
+<p>Patches in <code>$mod/global/patches/</code> are applied directly to the ROM, allowing for global modifications.</p>
+<h3 id="modifying-existing-data">Modifying Existing Data<a class="headerlink" href="#modifying-existing-data" title="Permanent link">#</a></h3>
+<p>@Data XXXX <br>
+@Function XXXX <br>
+@Hook XXXX <br>
+@Script:Global XXXX <br>
+@Script:Map XXXX <br>
+@Script:Battle XXXX <br></p>
+<p>@Fill XXXX YYYY <br>
+Fills a region of the ROM between XXX and YYY with whatever pattern is supplied as the patch. The pattern will repeat to fill the region and be truncated if it goes beyond the end.</p>
+<h3 id="creating-new-global-structs">Creating New Global Structs<a class="headerlink" href="#creating-new-global-structs" title="Permanent link">#</a></h3>
+<p><strong>#new:Data $Name</strong> <br>
+Use this to patch arbitrary data to the ROM.</p>
+<p><strong>#new:Function $Name</strong> <br>
+Use this to patch a function written in MIPS assembly to the ROM.</p>
+<p><strong>#new:Script:Global $Name</strong> <br>
+<strong>#new:Script:Map $Name</strong> <br>
+<strong>#new:Script:Battle $Name</strong> <br>
+Use these to create new scripts using particular function APIs.</p>
+<p><strong>#reserve XXXX $Name</strong> <br>
+Reserves XXXX bytes in RAM and stores the address in the <code>$Name</code> pointer, which can be referenced elsewhere in global patches.</p>
+<p><strong>#export:Function $GlobalFunction</strong> &ensp; Create a struct as global. <br>
+<strong>#export .NewConstName XXXX</strong> &emsp;&emsp; Create a constant as global. <br>
+<strong>#export $GlobalPointer</strong> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Make an existing struct global. <br>
+<strong>#export .ExistingConstName</strong> &emsp;&emsp;&emsp;&emsp; Make an existing constant global. <br></p>
+<p>Export makes things global. It works with both pointers and constants. You can also use <code>#export:</code> instead of <code>#new:</code> as a shorthand for creating global structs.</p>
+<h2 id="hint-files">Hint Files<a class="headerlink" href="#hint-files" title="Permanent link">#</a></h2>
+<p>The automatic recursive dumping system is sometimes unable to find all data structures in a data section, and generally unable to give descriptive names to the structures it does find. Fortunately, a hint system allows mod authors to supply hints to the dumping process. Hint files are located in <code>/database/hints/</code> with names that match the source files they apply to. You’ll find a large variety of default hints there. Within each file, the following hints are supported:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add</td>
+<td>Identifies a new data structure of a given type. <br> ex: <code>add      80240210   Function</code></td>
+</tr>
+<tr>
+<td>name</td>
+<td>Assign a unique name to a data structure. <br> ex: <code>name     80240210   Function_FadeScreenToBlack</code></td>
+</tr>
+<tr>
+<td>size</td>
+<td>Forces a certain size for a data structure. Rarely needed. <br> ex: <code>size     80240210   800</code></td>
+</tr>
+<tr>
+<td>newline</td>
+<td>Sets how many 32-bit words should be printed on each line. Default = 8. <br> ex: <code>newline  80240210   6</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href=".." class="btn btn-neutral" title="Getting Started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
