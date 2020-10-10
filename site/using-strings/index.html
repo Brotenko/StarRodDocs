@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Using Strings - StarRod Documentation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Using Strings";
+    var mkdocs_page_input_path = "using-strings.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> StarRod Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Getting Started</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../writing-patch-files/">Writing Patch Files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../writing-scripts/">Writing Scripts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../writing-code/">Writing Code</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Using Strings</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#string-theory">String Theory</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#star-rod-string-markup-guide">Star Rod String Markup Guide</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#special-characters">Special Characters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#formatting-tags">Formatting Tags</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#message-box-styles">Message Box Styles</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#functions">Functions</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#effect-types">Effect Types</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#modifyingadding-messages">Modifying/Adding Messages</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#string-with-variables">String with Variables</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#presenting-a-choice">Presenting a Choice</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#displaying-an-image">Displaying an Image</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../globals/">Globals</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../icons/">Icons</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../editing-items/">Editing Items</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../editing-sprites/">Editing Sprites</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../maps/">Maps</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../battles/">Battles</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../engine-limits/">Engine Limits</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../the-debug-menu/">The Debug Menug</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../command-line-interface/">Command Line Interface</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">StarRod Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Using Strings</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="using-strings">Using Strings<a class="headerlink" href="#using-strings" title="Permanent link">#</a></h1>
+<h2 id="string-theory">String Theory<a class="headerlink" href="#string-theory" title="Permanent link">#</a></h2>
+<p>Messages in Paper Mario use a special string format which Star Rod translates into a custom markup language. Non-printing characters are represented by tags enclosed by square brackets with colon-separated parameters. Tags are used for special characters, such as symbols and button icons like <code>[C-LEFT];</code> pauses or delays in printing like <code>[PAUSE];</code> and more complex formatting functions which modify text size/color/etc, e.g. <code>[Size:0A:0A]</code>, or show graphics like Icons and Images. Each string has a unique identifier which includes a 16-bit section ID and a 16-bit message ID. For example, string 001C0002 is message 2 in section 1C. Check the /strings/ folder of your ROM dump for numerous examples. When you compile your mod, Star Rod converts these back into the native Paper Mario string format.</p>
+<h2 id="star-rod-string-markup-guide">Star Rod String Markup Guide<a class="headerlink" href="#star-rod-string-markup-guide" title="Permanent link">#</a></h2>
+<h3 id="special-characters">Special Characters<a class="headerlink" href="#special-characters" title="Permanent link">#</a></h3>
+<p>Button Icons    <code>[A] [B] [L] [R] [Z] [C-UP] [C-DOWN] [C-LEFT] [C-RIGHT] [START]</code> <br>
+Solid Arrows  <code>[UP] [DOWN] [LEFT] [RIGHT]</code> <br>
+Misc Shapes    <code>[NOTE] [HEART] [STAR] [CIRCLE] [CROSS]</code> <br>
+Characters for %, [], and {} can be written with an escape character \%, [, ], {, and }.</p>
+<h3 id="formatting-tags">Formatting Tags<a class="headerlink" href="#formatting-tags" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[END]</td>
+<td>Terminates the string. All valid strings must end with this tag.</td>
+</tr>
+<tr>
+<td>[...]</td>
+<td>Causes the parser to combine the current line with the next one.</td>
+</tr>
+<tr>
+<td>[WAIT]</td>
+<td>Waits for the player to press A.</td>
+</tr>
+<tr>
+<td>[NEXT]</td>
+<td>Scrolls the message box down to the next set of text.</td>
+</tr>
+<tr>
+<td>[STYLE:type]</td>
+<td>Sets the style of the message box. Found at the beginning of most strings.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="message-box-styles">Message Box Styles<a class="headerlink" href="#message-box-styles" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Style</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RIGHT</td>
+<td>Standard NPC speech bubble connected to the speaker from the right side.</td>
+</tr>
+<tr>
+<td>LEFT</td>
+<td>Standard NPC speech bubble connected to the speaker from the left side.</td>
+</tr>
+<tr>
+<td>CENTER</td>
+<td>Standard NPC speech bubble connected to the speaker from the center.</td>
+</tr>
+<tr>
+<td>TATTLE</td>
+<td>Adaptive-size NPC speech bubble designed for Goombario's map tattles.</td>
+</tr>
+<tr>
+<td>CHOICE</td>
+<td>Expects<br>args: 4 (width, pos x, height, pos y)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>INSPECT</td>
+<td>Grey with a scrolling background pattern. Used when inspecting things.</td>
+</tr>
+<tr>
+<td>SIGN</td>
+<td>Text box looks like a wooden sign.</td>
+</tr>
+<tr>
+<td>LAMPPOST</td>
+<td>Metallic sign used for the lamp post in Toad Town.<br>args: height of text box</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>POPUP</td>
+<td>Creates a two-line text box in the middle of the screen with an automatic width. Used in scripts only for the “You got Kooper's shell!” message.</td>
+</tr>
+<tr>
+<td>POSTCARD</td>
+<td>Similar to INSPECT. Displays a postcard image on the bottom half of the screen.<br>args: postcard index</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>UPGRADE</td>
+<td>Used for upgrade blocks. Silent. Grey transparent scrolling BG, rounded frame.<br>args: 4 (width, pos x, height, pos y)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>NARRATE</td>
+<td>"you got X!", "Y joined your party!"</td>
+</tr>
+<tr>
+<td>EPILOGUE</td>
+<td>Used on the End of Chapter screens.<br>Silent and centered with no background.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">#</a></h3>
+<p><em><strong>TODO</strong></em></p>
+<h3 id="effect-types">Effect Types<a class="headerlink" href="#effect-types" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Effect</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rainbow</td>
+<td>Text colors change in a rainbow pattern.</td>
+</tr>
+<tr>
+<td>RainbowB</td>
+<td>Same (?) as Rainbow.</td>
+</tr>
+<tr>
+<td>DropShadow</td>
+<td>Adds a drop shadow effect to text.</td>
+</tr>
+<tr>
+<td>Faded</td>
+<td>Text is partially transparent.<br>args: opacity (00 = invisible, FF = opaque)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Jitter</td>
+<td>Causes the characters to move around randomly. It looks like the speaker is cold or frightened.</td>
+</tr>
+<tr>
+<td>FadedJitter</td>
+<td>Partially transparent version of Jitter.<br>args: opacity (00 = invisible, FF = opaque)</td>
+</tr>
+<tr>
+<td>Noise</td>
+<td>A noise pattern is overlaid over the text.</td>
+</tr>
+<tr>
+<td>FadedNoise</td>
+<td>Partially transparent Noise overlaid on text.<br>args: noise opacity (00 = invisible, FF = opaque)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Wavy</td>
+<td>Characters move in little circles, creating an overall sine wave effect.</td>
+</tr>
+<tr>
+<td>WavyB</td>
+<td>Same (?) as Wavy.</td>
+</tr>
+<tr>
+<td>SizeJitter</td>
+<td>Character sizes fluctuate randomly.</td>
+</tr>
+<tr>
+<td>SizeWave</td>
+<td>Characters move in and out, creating a wave effect of changing size.</td>
+</tr>
+<tr>
+<td>Shrinking</td>
+<td>Large characters are printed that quickly shrink to normal size.</td>
+</tr>
+<tr>
+<td>Growing</td>
+<td>Small characters are printed that quickly grow to normal size.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="modifyingadding-messages">Modifying/Adding Messages<a class="headerlink" href="#modifyingadding-messages" title="Permanent link">#</a></h2>
+<p>Any existing string can be modified or overwritten using text files in <code>$mod/strings/</code>. New ones can be added to any section, including a new section (2F) for custom strings. To illustrate, let's modify an existing string: 001C0002 (the tattle for Paragoomba).</p>
+<p>Create a text file <code>$mod/strings/example.str</code> (any filename will do) and insert the following:</p>
+<pre><code class="text">#string:1C:02 {
+[STYLE:RIGHT][...]
+Paragoomba tattle!
+[WAIT][END] }
+</code></pre>
+
+<p>The first line is the string ID with section and message IDs separated by colons. Then the string begins. All valid strings must be terminated by an [END] tag.</p>
+<p>You can add new strings with whatever ID you like, so long as the section ID is valid. If you don't care what ID the string gets, or prefer not to use hardcoded string IDs, you can give them a name instead. This name can be used in script files and will automatically be replaced by the proper string ID when you compile your mod. The following example is referenced in script files with <code>{String:MyStringName}</code>:</p>
+<pre><code class="text">#string:1C:(MyStringName) {
+[STYLE:RIGHT][...]
+Paragoomba tattle!
+[WAIT][END] }
+</code></pre>
+
+<p>Another way to use custom strings is to simply embed them in script files. This is great for strings that you don't plan to reuse, or which are not displayed in menus. Here's an example from a script file:</p>
+<pre><code class="text">#string $MyExampleString {
+[STYLE:RIGHT][...]
+This is an example string.
+[WAIT][END] }
+</code></pre>
+
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">#</a></h2>
+<h3 id="string-with-variables">String with Variables<a class="headerlink" href="#string-with-variables" title="Permanent link">#</a></h3>
+<p>Strings may contain variables to create messages like <em>“You won X coins!”</em> or <em>“Do you want to cook with Y?”</em>. Up to four variables can be set, denoted by [Var:0] through [Var:3], which are substituted when the message is displayed. Use these functions to set them in scripts before displaying the message:</p>
+<pre><code class="text">Integer values:     Call    SetMessageValue  ( value, variable index )
+String values:      Call    SetMessageString ( string, variable index )
+</code></pre>
+
+<p>String variables are usually set with pointers to the string. For example, you can use 8014C294 and 8014C290 to conditionally add “s” to the end of words if they are plural.</p>
+<h3 id="presenting-a-choice">Presenting a Choice<a class="headerlink" href="#presenting-a-choice" title="Permanent link">#</a></h3>
+<p>A proper choice dialog has three strings: the question, the options, and the response. Questions should be asked with <code>SayMessage0()</code> and end with {Func_04}, for example:</p>
+<pre><code class="text">[STYLE:RIGHT]
+Are you ready for a trial?[BR]
+[Func_04][END]
+</code></pre>
+
+<p>Options must use the following format. The <code>SetCancel</code> call is optional. Choices can contain up to five options. If you need more, use a nested dialog tree.</p>
+<pre><code class="text">[STYLE:CHOICE:60:70:80:3E][DelayOff][...]
+[Cursor:00][Option:00]Yes
+[Cursor:01][Option:01]No
+[Cursor:02][Option:02]Tell me more[...]
+[Option:FF][DelayOn][SetCancel:01}[...]
+[EndChoice:03][END]
+</code></pre>
+
+<p>Responses should be shown with <code>SayMessage2()</code> and begin with [NEXT] rather than [STYLE].</p>
+<pre><code class="text">[NEXT]All right, maybe next time.[WAIT][END]
+</code></pre>
+
+<p><strong>TIP:</strong> When setting up choice dialog boxes, you may have trouble deciding how big to make them and where to place them on the screen. When displayed, their size/position is stored at the following memory addresses, where you can edit them for a live preview:</p>
+<pre><code class="text">801555E2   hpos (0 = left)
+801555E4   vpos (0 = top)
+8015569C   hsize
+8015569E   vsize
+</code></pre>
+
+<p>To center the box, set hpos = 160` - hsize/2.</p>
+<h3 id="displaying-an-image">Displaying an Image<a class="headerlink" href="#displaying-an-image" title="Permanent link">#</a></h3>
+<p>Strings can display arbitrary images using the Image1 and Image7 functions. Both operate in the same manner, the latter just requires you to specify all the properties (position, etc) of the image in one function, rather than using several functions in conjunction to format it. The images may either be embedded in the map (see mgm_01) or loaded from the asset table (see osr_00 or any map where you get a new partner). In either case, you must tell the message system which image you want to use with <code>set_message_images</code> before displaying the message. The argument to this function is a pointer to an “image table”, which you must set up.</p>
+<p>Here is an example:</p>
+<pre><code class="text">#new:Function $SetImageList {
+    PUSH      RA
+    LIA       A0, $ImageList
+    JAL       80125B2C
+    NOP
+    POP       RA
+    JR        RA
+    ADDIU     V0, R0, 2
+} 
+
+#new:IntTable $ImageList {
+$Image0_Raster $Image0_Palette 00200020 00000002 00000000
+$Image1_Raster $Image1_Palette 00200020 00000002 00000000
+}
+
+% ~RasterFile etc refer to files in `$mod/res/`
+#new:IntTable $Image0_Raster { ~RasterFile:CI-4:example0.png }
+#new:IntTable $Image0_Palette { ~PaletteFile:CI-4:example0.png }
+
+#new:IntTable $Image1_Raster { ~RasterFile:CI-4:example1.png }
+#new:IntTable $Image1_Palette { ~PaletteFile:CI-4:example1.png }
+
+#new:Script $Conversation {
+    ...
+    Call     $SetImageList ( )
+    Call     SayMessage0 ( ... $ShowImageString )
+    ...
+}
+
+#string $ShowImageString {
+    [Image7:00:00:55:61:01:FF:0F][Func_04][END]
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../globals/" class="btn btn-neutral float-right" title="Globals">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../writing-code/" class="btn btn-neutral" title="Writing Code"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../writing-code/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../globals/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
