@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Editing Sprites - StarRod Documentation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Editing Sprites";
+    var mkdocs_page_input_path = "editing-sprites.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> StarRod Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Getting Started</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../writing-patch-files/">Writing Patch Files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../writing-scripts/">Writing Scripts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../writing-code/">Writing Code</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../using-strings/">Using Strings</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../globals/">Globals</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../icons/">Icons</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../editing-items/">Editing Items</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Editing Sprites</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#adding-a-new-npc-sprite">Adding a new NPC sprite</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#palettes">Palettes</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../maps/">Maps</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../battles/">Battles</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../engine-limits/">Engine Limits</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../the-debug-menu/">The Debug Menug</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../command-line-interface/">Command Line Interface</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">StarRod Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Editing Sprites</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="editing-sprites">Editing Sprites<a class="headerlink" href="#editing-sprites" title="Permanent link">#</a></h1>
+<h2 id="adding-a-new-npc-sprite">Adding a new NPC sprite<a class="headerlink" href="#adding-a-new-npc-sprite" title="Permanent link">#</a></h2>
+<p>To add a new NPC sprite, duplicate one of the folders in $MOD/sprite/npc/src/, give it a new name, and add the new sprite to $MOD/sprite/SpriteTable.xml. The new sprite will now appear in the sprite editor and will be built when you compile your mod.</p>
+<h2 id="palettes">Palettes<a class="headerlink" href="#palettes" title="Permanent link">#</a></h2>
+<p>Sprites only used in the world may have whatever palettes you like, but sprites which are used in battle are expected to have a certain number of palettes in a particular order to properly display status ailments. The expected order is:</p>
+<p><strong>Partner Actors:</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">x</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0</td>
+<td>Normal</td>
+<td>Unchanged</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td>Poisoned</td>
+<td>Green tint</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td>Turn Finished</td>
+<td>Darker tint</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td>Shocked</td>
+<td>Yellow tint</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td>Burned</td>
+<td>Blackened</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p><strong>Enemy Actor:</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">x</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0</td>
+<td>Normal</td>
+<td>Unchanged</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td>Poisoned</td>
+<td>Green tint</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td>Turn Finished</td>
+<td>Darker tint</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td>Shocked</td>
+<td>Yellow tint</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td>Burned</td>
+<td>Blackened</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>Enemies with different color-variants (palette-swaps) have a separate set of palettes for each color variant (see sprite 31). In the sprite editor, the number of color variants is controlled by the “Groups” field of the “Spritesheet” tab. The palettes are expected in the following order:</p>
+<pre><code class="text">Normal 1, Normal 2, …, Normal N
+Poisoned 1, Poisoned 2, …, Poisoned N
+Dizzy 1, Dizzy 2, …, Dizzy N
+Shocked 1, Shocked 2, … Shocked N
+Burned (only one)
+</code></pre>
+
+<p>Additional palettes for certain “accessories” appear after these (see sprite 68).</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../maps/" class="btn btn-neutral float-right" title="Maps">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../editing-items/" class="btn btn-neutral" title="Editing Items"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../editing-items/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../maps/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
