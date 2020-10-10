@@ -2,6 +2,18 @@ site_name: StarRod Documentation
 nav:
   - Getting Started: index.md
   - Writing Patch Files: writing-patch-files.md
+  - Writing Scripts: writing-scripts.md
+  - Writing Code: writing-code.md
+  - Using Strings: using-strings.md
+  - Globals: globals.md
+  - Icons: icons.md
+  - Editing Items: editing-items.md
+  - Editing Sprites: editing-sprites.md
+  - Maps: maps.md
+  - Battles: battles.md
+  - Engine Limits: engine-limits.md
+  - The Debug Menug: the-debug-menu.md
+  - Command Line Interface: command-line-interface.md
 theme: readthedocs
 markdown_extensions:
   - toc:
